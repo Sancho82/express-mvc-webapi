@@ -4,17 +4,23 @@ const flats = express();
 
 // index (show all)
 flats.get('/', (req, res) => {
+  // az összes lakást megkeresi
   models.Flat.findAll().then(result => {
+    // majd visszadja őket json-ben
     res.json(result);
   });
 });
 
 // find by id
 flats.get('/:id', (req, res) => {
+  // keres egy olyan lakást ahol az id megegyezik a keresősávba beírt id-vel
   models.Flat.findOne({where: {id: req.params.id}}).then(result => {
+    // ha van ilyen
     if (result) {
+      // visszaadja json formátumban
       res.json(result);
     } else {
+      // ha nincs, a következő üzenetet küldi
       res.send('No house with such an id exists in database.');
     }
   });
